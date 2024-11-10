@@ -1,17 +1,19 @@
 import { TranslationBlock } from "../TranslationBlock/TranslationBlock";
 import styles from "./Results.module.scss";
 
-export function Results({ results }) {
+export function Results({ results, onSelect }) {
   return (
-    <div class={styles.wrapper}>
+    <div className={styles.wrapper}>
       {(results?.length &&
-        results.map((tb) => {
+        results.map((tb, i) => {
           return (
-            <div className={styles.results}>
-              <TranslationBlock translationBlock={tb}></TranslationBlock>
-            </div>
+            <TranslationBlock
+              key={i}
+              translationBlock={tb}
+              onSelect={onSelect}
+            />
           );
-        })) || <p>No results found</p>}
+        })) || <p className={styles.empty}>No results found</p>}
     </div>
   );
 }

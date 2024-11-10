@@ -1,9 +1,9 @@
 .wrapper {
-  padding: 1rem 0;
-}
-
-.results {
   > *:not(:last-child) {
     margin-bottom: 1rem;
   }
+}
+
+.empty {
+  text-align: center;
 }

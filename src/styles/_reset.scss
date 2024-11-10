@@ -9,6 +9,7 @@
   margin: 0;
 }
 body {
+  height: 100vh;
   /* 3. Add accessible line-height */
   line-height: 1.5;
   /* 4. Improve text rendering */
@@ -58,4 +59,14 @@ h6 {
 #root,
 #__next {
   isolation: isolate;
+}
+/*
+  10. Clear lists styles
+*/
+ul,
+ol,
+li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }

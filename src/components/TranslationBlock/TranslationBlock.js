@@ -4,7 +4,7 @@ import { TranslationSubject } from "../TranslationSubject/TranslationSubject";
 import { TranslationOption } from "../TranslationOption/TranslationOption";
 import styles from "./TranslationBlock.module.scss";
 
-export function TranslationBlock({ translationBlock: tb }) {
+export function TranslationBlock({ translationBlock: tb, onSelect }) {
   return (
     <div className={styles.block}>
       <TranslationBlockHeader
@@ -20,12 +20,13 @@ export function TranslationBlock({ translationBlock: tb }) {
               <div className={styles.translations}>
                 {t.translations.map((t, j) => {
                   return (
-                    <TranslationOption
-                      preContext={t.preContext}
-                      mainTranslation={t.mainTranslation}
-                      afterContext={t.afterContext}
-                      key={j}
-                    />
+                    <span key={j} onClick={() => onSelect(t.mainTranslation)}>
+                      <TranslationOption
+                        preContext={t.preContext}
+                        mainTranslation={t.mainTranslation}
+                        afterContext={t.afterContext}
+                      />
+                    </span>
                   );
                 })}
               </div>

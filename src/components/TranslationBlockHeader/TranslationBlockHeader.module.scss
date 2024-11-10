@@ -9,12 +9,16 @@
 
 .term {
   font-weight: 700;
+  margin-right: 1rem;
+}
+
+.transcript {
+  letter-spacing: 1px;
 }
 
 .details {
   display: flex;
   align-items: center;
-  gap: 1rem;
 }
 
 .part {
