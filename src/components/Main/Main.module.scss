@@ -1,0 +1,15 @@
+.wrapper {
+  height: 100%;
+  display: grid;
+  grid-template-rows: 4rem auto;
+}
+
+.search {
+  padding: 1rem;
+  background-color: var(--color-7);
+}
+
+.results {
+  padding: 1rem;
+  overflow: auto;
+}

@@ -1,20 +1,9 @@
-import { useState } from "react";
 import "./Input.module.scss";
 
-export function Input({ onEnter }) {
-  const [value, setValue] = useState("");
-
-  const onKeyDown = (e) => {
-    if (e.key === "Enter") {
-      onEnter(value);
-    }
+export function Input({ onChange }) {
+  const updateValue = (v) => {
+    onChange(v);
   };
 
-  return (
-    <input
-      value={value}
-      onChange={(e) => setValue(e.target.value)}
-      onKeyDown={onKeyDown}
-    />
-  );
+  return <input onChange={(e) => updateValue(e.target.value)} />;
 }
