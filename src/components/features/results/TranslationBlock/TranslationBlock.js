@@ -2,7 +2,7 @@ import { TranslationBlockHeader } from "../TranslationBlockHeader/TranslationBlo
 import { TranslationSubject } from "../TranslationSubject/TranslationSubject";
 import { TranslationOption } from "../TranslationOption/TranslationOption";
 import styles from "./TranslationBlock.module.scss";
-import { useSearchDispatch } from "../../context/SearchContext";
+import { useSearchDispatch } from "../../../../context/SearchContext";
 
 export function TranslationBlock({ translationBlock: tb }) {
   const dispatch = useSearchDispatch();

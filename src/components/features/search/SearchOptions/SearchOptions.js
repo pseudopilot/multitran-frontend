@@ -1,4 +1,4 @@
-import { useSearchDispatch } from "../../context/SearchContext";
+import { useSearchDispatch } from "../../../../context/SearchContext";
 import styles from "./SearchOptions.module.scss";
 
 export function SearchOptions({ options, selectedIndex }) {

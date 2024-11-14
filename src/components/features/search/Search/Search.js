@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
-import { Input } from "../Input/Input";
+import { Input } from "../../../common/atoms/Input/Input";
 import { SearchOptions } from "../SearchOptions/SearchOptions";
 import styles from "./Search.module.scss";
-import { useSearchDispatch, useSearch } from "../../context/SearchContext";
+import {
+  useSearchDispatch,
+  useSearch,
+} from "../../../../context/SearchContext";
 
 export function Search() {
   const [query, setQuery] = useState("");

@@ -1,10 +1,9 @@
-import { useState } from "react";
-import { Search } from "../Search/Search";
-import { Results } from "../Results/Results";
-import styles from "./Main.module.scss";
-import SearchProvider from "../../context/SearchContext";
+import { Search } from "../../features/search/Search/Search";
+import { Results } from "../../features/results/Results/Results";
+import styles from "./MainLayout.module.scss";
+import SearchProvider from "../../../context/SearchContext";
 
-export function Main() {
+export function MainLayout() {
   return (
     <SearchProvider>
       <div className={styles.wrapper}>

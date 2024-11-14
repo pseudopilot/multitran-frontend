@@ -1,6 +1,6 @@
 import { TranslationBlock } from "../TranslationBlock/TranslationBlock";
 import styles from "./Results.module.scss";
-import { useSearch } from "../../context/SearchContext";
+import { useSearch } from "../../../../context/SearchContext";
 
 export function Results() {
   const { searchResults } = useSearch();
