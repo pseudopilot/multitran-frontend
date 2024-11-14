@@ -2,24 +2,31 @@ import { useState, useEffect } from "react";
 import { Input } from "../Input/Input";
 import { SearchOptions } from "../SearchOptions/SearchOptions";
 import styles from "./Search.module.scss";
+import { useSearchDispatch, useSearch } from "../../context/SearchContext";
 
-export function Search({ onSearch }) {
+export function Search() {
   const [query, setQuery] = useState("");
   const [lookupResults, setLookupResults] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
-  const handler = (e) => {
+  const { searchQuery, searchResults } = useSearch();
+  const dispatch = useSearchDispatch();
+
+  const keyDownHandler = (e) => {
+    if (!["Escape", "Enter", "ArrowDown", "ArrowUp"].includes(e.key)) return;
+
+    e.preventDefault();
+
     if (e.key === "Escape") {
-      e.preventDefault();
-      setLookupResults([]);
+      updateLookupResults([]);
     } else if (e.key === "Enter") {
-      e.preventDefault();
-      onSelect(lookupResults[selectedIndex] || query);
+      dispatch({
+        type: "SET_SEARCH_QUERY",
+        payload: lookupResults[selectedIndex] || query,
+      });
     } else if (e.key === "ArrowDown") {
-      e.preventDefault();
       setSelectedIndex((si) => ((si + 2) % (lookupResults.length + 1)) - 1);
     } else if (e.key === "ArrowUp") {
-      e.preventDefault();
       setSelectedIndex(
         (si) =>
           ((si + lookupResults.length + 1) % (lookupResults.length + 1)) - 1
@@ -28,32 +35,46 @@ export function Search({ onSearch }) {
   };
 
   useEffect(() => {
-    document.addEventListener("keydown", handler);
-
-    return () => document.removeEventListener("keydown", handler);
+    document.addEventListener("keydown", keyDownHandler);
+    return () => document.removeEventListener("keydown", keyDownHandler);
   }, [lookupResults, selectedIndex]);
 
-  const onSelect = (v) => {
-    setSelectedIndex(-1);
-    setLookupResults([]);
-    onSearch(v);
-  };
+  useEffect(() => {
+    setQuery(searchQuery);
+    searchTranslation(searchQuery);
+  }, [searchQuery]);
 
-  const onChange = async (v) => {
+  useEffect(() => {
+    updateLookupResults([]);
+  }, [searchResults]);
+
+  const onInputUpdate = async (v) => {
     setQuery(v);
-    setSelectedIndex(-1);
 
     if (!v) {
-      setLookupResults([]);
+      updateLookupResults([]);
     } else {
       const res = await lookup(v);
-      setLookupResults(res);
+      updateLookupResults(res);
     }
+  };
+
+  const searchTranslation = async (v) => {
+    const res = await search(v);
+    dispatch({
+      type: "SET_SEARCH_RESULTS",
+      payload: res,
+    });
+  };
+
+  const updateLookupResults = (newResults) => {
+    setSelectedIndex(-1);
+    setLookupResults(newResults);
   };
 
   return (
     <div className={styles.wrapper}>
-      <Input onChange={onChange} />
+      <Input value={query} onChange={onInputUpdate} />
       <div className={styles.results}>
         <SearchOptions options={lookupResults} selectedIndex={selectedIndex} />
         <div className={styles.divider} />
@@ -64,6 +85,15 @@ export function Search({ onSearch }) {
 
 function lookup(v) {
   return fetch(`http://localhost:4000/lookup?text=${v}`)
+    .then((res) => res.json())
+    .catch((err) => {
+      console.error(err);
+      return [];
+    });
+}
+
+function search(v) {
+  return fetch(`http://localhost:4000/search?text=${v}`)
     .then((res) => res.json())
     .catch((err) => {
       console.error(err);
