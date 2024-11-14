@@ -1,10 +1,19 @@
-import { Fragment } from "react";
 import { TranslationBlockHeader } from "../TranslationBlockHeader/TranslationBlockHeader";
 import { TranslationSubject } from "../TranslationSubject/TranslationSubject";
 import { TranslationOption } from "../TranslationOption/TranslationOption";
 import styles from "./TranslationBlock.module.scss";
+import { useSearchDispatch } from "../../../../context/SearchContext";
 
-export function TranslationBlock({ translationBlock: tb, onSelect }) {
+export function TranslationBlock({ translationBlock: tb }) {
+  const dispatch = useSearchDispatch();
+
+  const onSelect = (v) => {
+    dispatch({
+      type: "SET_SEARCH_QUERY",
+      payload: v,
+    });
+  };
+
   return (
     <div className={styles.block}>
       <TranslationBlockHeader
